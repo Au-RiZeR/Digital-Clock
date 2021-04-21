@@ -2,7 +2,100 @@ body {
 
 }
 
-.unlit{
-    background-color: red;
+main {
+    display: flex;
+    width: 100vw;
+    justify-content: center;
 }
 
+.unlit{
+    background-image: radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05));
+}
+
+.lit {
+    background-image: radial-gradient(rgba(255,0,0,1), rgba(255,0,0,0.5));
+}
+
+.number {
+    margin: 2vw;
+    min-width: fit-content;
+}
+.top {
+    width: 20vw;
+    height: 2vw;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0 50%
+    )
+}
+.topLeft {
+    width: 2vw;
+    height: 20vw;
+    left: -1.5vw;
+    top: -0.5vw;
+    /* border-radius: 1px; */
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 5%, 50% 0%, 100% 5%, 100% 95%, 50% 100%, 0% 95%
+    )
+}
+.topRight {
+    width: 2vw;
+    height: 20vw;
+    left: 19.5vw;
+    top: -20.5vw;
+    /* border-radius: 1px; */
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 5%, 50% 0%, 100% 5%, 100% 95%, 50% 100%, 0% 95%
+    )
+}
+.centre {
+    width: 20vw;
+    height: 2vw;
+    top: -21vw;
+    /* border-radius: 1px; */
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0 50%
+    )
+}
+.bottomLeft {
+    width: 2vw;
+    height: 20vw;
+    left: -1.5vw;
+    top: -21.5vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 5%, 50% 0%, 100% 5%, 100% 95%, 50% 100%, 0% 95%
+    )
+}
+.bottomRight {
+    width: 2vw;
+    height: 20vw;
+    left: 19.5vw;
+    top: -41.5vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 5%, 50% 0%, 100% 5%, 100% 95%, 50% 100%, 0% 95%
+    )
+}
+.bottom {
+    width: 20vw;
+    height: 2vw;
+    top: -42vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0 50%
+    )
+}
