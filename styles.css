@@ -4,10 +4,23 @@ body {
 
 main {
     display: flex;
-    width: 100vw;
+    width: 100vw -8px;
     justify-content: center;
+    transform: scale(1);
+    transition: all 2s;
 }
-
+main.animate1 {
+    transform: scale(1)
+}
+main.animate2 {
+    transform: scale(0.8)
+}
+main.animate3 {
+    transform: scale(0.6)
+}
+main.animate4 {
+    transform: scale(0.4);
+}
 .unlit{
     background-image: radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05));
 }

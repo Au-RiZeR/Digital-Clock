@@ -3,6 +3,8 @@ $(document).ready(function () {
     var segments = 7
     var seven = ['top', 'topLeft', 'topRight', 'centre', 'bottomLeft', 'bottomRight', 'bottom']
     var time = 24
+    var size = 1
+
 
     setInterval(() => {
         for (let i = 1; i < 5; i++) {
@@ -29,6 +31,20 @@ $(document).ready(function () {
         // flash();
     }, 1000);
 
+    $('#options').click(function (e) { 
+        e.preventDefault();
+        var shrink = document.createElement('button')
+        $(shrink).text('shrink');
+        $('nav').append(shrink);
+        $(shrink).click(function (e) { 
+            e.preventDefault();
+            if (size < 4) {
+                size++
+                changeSize()
+            }
+        });
+        
+    });
     function resetter(placement) {
         for (let i = 0; i < 7; i++) {
             let element = $(`#number${placement} > div`)[i];
@@ -38,7 +54,14 @@ $(document).ready(function () {
         }
     }
 
-
+function changeSize() {
+    console.log('function called')
+    $(clockArea[0].children).animate({
+        // scale: '0.1',
+        // opacity: '0'
+    },1000)
+    $(clockArea).toggleClass(`animate${size}`);
+}
 
 
 
@@ -47,7 +70,7 @@ $(document).ready(function () {
             sevenSegments()
         }
     }
-
+    console.log(clockArea)
     function unlitter(number) {
         for (let i = 0; i < number.childNodes.length; i++) {
             let div = $(number.childNodes[i])
