@@ -33,28 +33,36 @@ $(document).ready(function () {
 
     $('#options').click(function (e) {
         e.preventDefault();
-        var shrink = document.createElement('button')
-        $(shrink).text('shrink');
-        $('nav').append(shrink);
-        $(shrink).click(function (e) {
-            e.preventDefault();
-            if (size < 4) {
-                changeSize()
-                size++
-                changeSize()
+        if ($('nav')[0].children.length > 1) {
+            for (let i = 1; i <= $('nav')[0].children.length + 1; i++) {
+                let nav = document.getElementById('nav')
+                nav.removeChild(nav.childNodes[2])
+                
             }
-        });
-        var grow = document.createElement('button')
-        $(grow).text('grow');
-        $('nav').append(grow);
-        $(grow).click(function (e) {
-            e.preventDefault();
-            if (size > 1) {
-                changeSize()
-                size--
-                changeSize()
-            }
-        });
+        } else {
+            var shrink = document.createElement('button')
+            $(shrink).text('shrink');
+            $('nav').append(shrink);
+            $(shrink).click(function (e) {
+                e.preventDefault();
+                if (size < 4) {
+                    changeSize()
+                    size++
+                    changeSize()
+                }
+            });
+            var grow = document.createElement('button')
+            $(grow).text('grow');
+            $('nav').append(grow);
+            $(grow).click(function (e) {
+                e.preventDefault();
+                if (size > 1) {
+                    changeSize()
+                    size--
+                    changeSize()
+                }
+            });
+        }
     });
     function resetter(placement) {
         for (let i = 0; i < 7; i++) {
@@ -80,7 +88,6 @@ $(document).ready(function () {
             sevenSegments()
         }
     }
-    console.log(clockArea)
     function unlitter(number) {
         for (let i = 0; i < number.childNodes.length; i++) {
             let div = $(number.childNodes[i])
@@ -92,7 +99,6 @@ $(document).ready(function () {
     function sevenSegments() {
         let number = document.createElement('div')
         $(number).attr('id', 'number' + n);
-        console.log($(number).attr('id'))
         $(number).attr('class', 'number');
         let top = document.createElement('div')
         let topLeft = document.createElement('div')
