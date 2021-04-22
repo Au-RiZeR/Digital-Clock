@@ -112,3 +112,27 @@ main.animate4 {
         5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0 50%
     )
 }
+.topCross {
+    width: 18vw;
+    height: 18vw;
+    top: -83.5vw;
+    left: 1vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 100%, 0% 92.5%, 92.5% 0%, 100% 0%, 100% 7.5%, 7.5% 100%
+    )
+}
+.bottomCross {
+    width: 18vw;
+    height: 18vw;
+    top: -80.5vw;
+    left: 1vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 100%, 0% 92.5%, 92.5% 0%, 100% 0%, 100% 7.5%, 7.5% 100%
+    )
+}
