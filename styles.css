@@ -1,25 +1,28 @@
 body {
-
+background-color: black;
 }
 
 main {
     display: flex;
+    position: relative;
     width: 100vw -8px;
     justify-content: center;
     transform: scale(1);
     transition: all 2s;
+    /* top: -1vh; */
+    height: 400px;
 }
 main.animate1 {
-    transform: scale(1)
+    transform: scale(1);
 }
 main.animate2 {
-    transform: scale(0.8)
+    transform: scale(0.8) translate(0, 20vh);
 }
 main.animate3 {
-    transform: scale(0.6)
+    transform: scale(0.6) translate(0, 40vh) ;
 }
 main.animate4 {
-    transform: scale(0.4);
+    transform: scale(0.4) translate(0, 60vh);
 }
 .unlit{
     background-image: radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05));
@@ -30,8 +33,13 @@ main.animate4 {
 }
 
 .number {
+    transform: scale(1);
+    transition: all 0s;
     margin: 2vw;
     min-width: fit-content;
+}
+.number.animate {
+    transform: scale(0.8);
 }
 .top {
     width: 20vw;
@@ -134,5 +142,165 @@ main.animate4 {
     overflow:hidden;
     clip-path: polygon(
         0% 100%, 0% 92.5%, 92.5% 0%, 100% 0%, 100% 7.5%, 7.5% 100%
+    )
+}
+
+.centreLeft {
+    width: 9.5vw;
+    height: 2vw;
+    top: -21vw;
+    /* border-radius: 1px; */
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0 50%
+    )
+}
+.centreRight {
+    width: 9.5vw;
+    height: 2vw;
+    top: -23vw;
+    left: 10.5vw;
+    /* border-radius: 1px; */
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0 50%
+    )
+}
+.bottomLeftBig {
+    width: 2vw;
+    height: 20vw;
+    left: -1.5vw;
+    top: -23.5vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 5%, 50% 0%, 100% 5%, 100% 95%, 50% 100%, 0% 95%
+    )
+}
+.bottomRightBig {
+    width: 2vw;
+    height: 20vw;
+    left: 19.5vw;
+    top: -43.5vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 5%, 50% 0%, 100% 5%, 100% 95%, 50% 100%, 0% 95%
+    )
+}
+.bottomBig {
+    width: 20vw;
+    height: 2vw;
+    top: -44vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0 50%
+    )
+}
+
+.topLeftCross {
+    width: 7.5vw;
+    height: 18vw;
+    top: -85.5vw;
+    left: 1vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 0%, 20% 0%, 100% 92.5%, 100% 100%, 80% 100%, 0% 7.5%
+    )
+}
+.topCentre {
+    width: 2vw;
+    height: 19vw;
+    left: 9vw;
+    top: -103.5vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 5%, 50% 0%, 100% 5%, 100% 95%, 50% 100%, 0% 95%
+    )
+}
+.topRightCross {
+    transform: scale(-1,1);
+    width: 7.5vw;
+    height: 18vw;
+    top: -122.5vw;
+    left: 11.5vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 0%, 20% 0%, 100% 92.5%, 100% 100%, 80% 100%, 0% 7.5%
+    )
+}
+
+.bottomLeftCross {
+    transform: scale(-1,1);
+    width: 7.5vw;
+    height: 18vw;
+    top: -119.5vw;
+    left: 1vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 0%, 20% 0%, 100% 92.5%, 100% 100%, 80% 100%, 0% 7.5%
+    )
+}
+.bottomCentre {
+    width: 2vw;
+    height: 19vw;
+    left: 9vw;
+    top: -138.5vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 5%, 50% 0%, 100% 5%, 100% 95%, 50% 100%, 0% 95%
+    )
+}
+.bottomRightCross {
+    width: 7.5vw;
+    height: 18vw;
+    top: -156.5vw;
+    left: 11.5vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 0%, 20% 0%, 100% 92.5%, 100% 100%, 80% 100%, 0% 7.5%
+    )
+}
+#d1 {
+    top: 6vw;
+    width: 1.8vw;
+    height: 20vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 5%, 50% 0%, 100% 5%, 100% 95%, 50% 100%, 0% 95%
+    )
+}
+#divider{
+    margin: 0vw;
+}
+#d2 {
+    top: 1vw;
+    width: 1.8vw;
+    height: 20vw;
+    border-radius: 1px;
+    position:relative;
+    overflow:hidden;
+    clip-path: polygon(
+        0% 5%, 50% 0%, 100% 5%, 100% 95%, 50% 100%, 0% 95%
     )
 }
