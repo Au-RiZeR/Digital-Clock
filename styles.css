@@ -2,26 +2,26 @@ body {
 background-color: black;
 }
 
-main {
+#main {
     display: flex;
     position: relative;
     width: 100vw -8px;
     justify-content: center;
     transform: scale(1);
-    transition: all 2s;
+    transition: all 0s;
     /* top: -1vh; */
     height: 400px;
 }
-main.animate1 {
+#main.animate1 {
     transform: scale(1);
 }
-main.animate2 {
+#main.animate2 {
     transform: scale(0.8) translate(0, 20vh);
 }
-main.animate3 {
+#main.animate3 {
     transform: scale(0.6) translate(0, 40vh) ;
 }
-main.animate4 {
+#main.animate4 {
     transform: scale(0.4) translate(0, 60vh);
 }
 .unlit{
@@ -32,9 +32,21 @@ main.animate4 {
     background-image: radial-gradient(rgba(255,0,0,1), rgba(255,0,0,0.5));
 }
 
+#number1 {
+    transition: all 1s;
+}
+#number2 {
+    transition: all 1s;
+}
+#number3 {
+    transition: all 1s;
+}
+#number4 {
+    transition: all 1s;
+}
 .number {
     transform: scale(1);
-    transition: all 0s;
+    /* transition: all 0s; */
     margin: 2vw;
     min-width: fit-content;
 }

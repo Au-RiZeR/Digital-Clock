@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    localStorage.setItem('segments', 7)
     var clockArea = $('#main')
     var segments = function () {
         if (localStorage.getItem('segments')) {
@@ -9,13 +8,26 @@ $(document).ready(function () {
             return 7
         }
     }
+    var size = 1
+    console.log(localStorage.getItem('size'))
+    if (localStorage.getItem('size')) {
+    size = localStorage.getItem('size')
+    } else {
+    localStorage.setItem('size', 1)
+    size = localStorage.getItem('size')
+    }
+    console.log(size)
     var segmentAmounts = ['7', '9', '14']
     var seven = ['top', 'topLeft', 'topRight', 'centre', 'bottomLeft', 'bottomRight', 'bottom']
     var nine = ['top', 'topLeft', 'topRight', 'centre', 'bottomLeft', 'bottomRight', 'bottom', 'topCross', 'bottomCross']
     var fourteen = ['top', 'topLeft', 'topRight', 'centreLeft', 'centreRight', 'bottomLeftBig', 'bottomRightBig', 'bottomBig', 'topLeftCross', 'topCentre', 'topRightCross', 'bottomLeftCross', 'bottomCentre', 'bottomRightCross']
     var time = 24
-    var size = 1
     generate()
+    changeSize()
+    setTimeout(() => {
+        document.getElementById(`main`).style.transitionDuration = "2s";  
+    }, 1000);
+
     setInterval(() => {
         for (let i = 1; i < 5; i++) {
             resetter(i);
@@ -44,7 +56,7 @@ $(document).ready(function () {
     $('#options').click(function (e) {
         e.preventDefault();
         if ($('nav')[0].children.length > 1) {
-            for (let i = 1; i <= $('nav')[0].children.length + 1; i++) {
+            for (let i = 1; i <= $('nav')[0].children.length + 3; i++) {
                 let nav = document.getElementById('nav')
                 nav.removeChild(nav.childNodes[2])
 
@@ -59,6 +71,7 @@ $(document).ready(function () {
                     changeSize()
                     size++
                     changeSize()
+                    localStorage.setItem('size', size)
                 }
             });
             var grow = document.createElement('button')
@@ -70,6 +83,7 @@ $(document).ready(function () {
                     changeSize()
                     size--
                     changeSize()
+                    localStorage.setItem('size', size)
                 }
             });
             var more = document.createElement('button')
