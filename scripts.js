@@ -31,19 +31,30 @@ $(document).ready(function () {
         // flash();
     }, 1000);
 
-    $('#options').click(function (e) { 
+    $('#options').click(function (e) {
         e.preventDefault();
         var shrink = document.createElement('button')
         $(shrink).text('shrink');
         $('nav').append(shrink);
-        $(shrink).click(function (e) { 
+        $(shrink).click(function (e) {
             e.preventDefault();
             if (size < 4) {
+                changeSize()
                 size++
                 changeSize()
             }
         });
-        
+        var grow = document.createElement('button')
+        $(grow).text('grow');
+        $('nav').append(grow);
+        $(grow).click(function (e) {
+            e.preventDefault();
+            if (size > 1) {
+                changeSize()
+                size--
+                changeSize()
+            }
+        });
     });
     function resetter(placement) {
         for (let i = 0; i < 7; i++) {
@@ -54,14 +65,13 @@ $(document).ready(function () {
         }
     }
 
-function changeSize() {
-    console.log('function called')
-    $(clockArea[0].children).animate({
-        // scale: '0.1',
-        // opacity: '0'
-    },1000)
-    $(clockArea).toggleClass(`animate${size}`);
-}
+    function changeSize() {
+        $(clockArea[0].children).animate({
+            // scale: '0.1',
+            // opacity: '0'
+        }, 1000)
+        $(clockArea).toggleClass(`animate${size}`);
+    }
 
 
 
@@ -81,7 +91,7 @@ function changeSize() {
 
     function sevenSegments() {
         let number = document.createElement('div')
-        $(number).attr('id', 'number'+n);
+        $(number).attr('id', 'number' + n);
         console.log($(number).attr('id'))
         $(number).attr('class', 'number');
         let top = document.createElement('div')
