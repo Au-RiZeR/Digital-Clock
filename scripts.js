@@ -77,14 +77,9 @@ $(document).ready(function () {
         console.log(innerColor)
         $('.lit').css('background-image', `radial-gradient(${innerColor}, ${outerColor})`);
         flash();
-        // $('.lit').css('background-image', `radial-gradient(${$(innerColor).val()}, rgba(255,0,0,0.5))`);
     }, 1000);
-    // setInterval(function(){
-    //     $('.lit').css('background-image', `radial-gradient(${$(innerColor).val()}, rgba(255,0,0,0.5))`);
-    // }, 1000);
     function flash() {
         for (let i = 1; i < 3; i++) {
-
             const element = $(`#d${i}`);
             let existingClasses = $(element).attr('class');
             if (flicker == 1) {
@@ -97,8 +92,11 @@ $(document).ready(function () {
         }
         if (flicker == 1) {
             flicker++
+            $('.lit').css('background-image', `radial-gradient(${innerColor}, ${outerColor})`);
+
         } else {
             flicker--
+            $('.unlit').css('background-image', `radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
         }
     }
     $('#options').click(function (e) {
@@ -107,7 +105,6 @@ $(document).ready(function () {
             for (let i = 1; i <= $('nav')[0].children.length + 6; i++) {
                 let nav = document.getElementById('nav')
                 nav.removeChild(nav.childNodes[2])
-
             }
         } else {
             var innerColors = document.createElement('input')
@@ -191,13 +188,7 @@ $(document).ready(function () {
     });
     function resetter(placement) {
         for (let i = 0; i < segments(); i++) {
-            // let element = $(`#number${placement} > div`)[i];
-            // let existingClasses = $(element).attr('class');
-            // let newClasses = existingClasses.replace(' lit', ' unlit');
-            // $(element).attr('class', newClasses)
             $('.unlit').css('background-image', `radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
-            // $('.lit').css('background-image', `radial-gradient(${$(innerColor).val()}, rgba(255,0,0,0.5))`);
-            // $('.unlit').css('background-image', `radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
         }
     }
     function changeSize() {
@@ -211,10 +202,10 @@ $(document).ready(function () {
             if (n == 3) {
                 let divider1 = document.createElement('div')
                 $(divider1).attr('id', 'd1');
-                $(divider1).attr('class', 'unlit number animate');
+                $(divider1).attr('class', ' unlit number animate');
                 let divider2 = document.createElement('div')
                 $(divider2).attr('id', 'd2');
-                $(divider2).attr('class', 'unlit number animate');
+                $(divider2).attr('class', ' unlit number animate');
                 let div = document.createElement('div')
                 $(div).attr('class', 'number animate');
                 $(div).append(divider1, divider2);
@@ -253,7 +244,6 @@ $(document).ready(function () {
         let bottomLeft = document.createElement('div')
         let bottomRight = document.createElement('div')
         let bottom = document.createElement('div')
-        // $(top, topLeft, topRight, centre, bottomLeft, bottomRight, bottom).attr('class', 'unlit');
         $(number).append(top, topLeft, topRight, centre, bottomLeft, bottomRight, bottom);
         $(clockArea).append(number);
         unlitter(number)
@@ -271,7 +261,6 @@ $(document).ready(function () {
         let bottom = document.createElement('div')
         let topCross = document.createElement('div')
         let bottomCross = document.createElement('div')
-        // $(top, topLeft, topRight, centre, bottomLeft, bottomRight, bottom, topCross, bottomCross).attr('class', 'unlit');
         $(number).append(top, topLeft, topRight, centre, bottomLeft, bottomRight, bottom, topCross, bottomCross);
         $(clockArea).append(number);
         unlitter(number)
@@ -294,7 +283,6 @@ $(document).ready(function () {
         let bottomLeftCross = document.createElement('div')
         let bottomCentre = document.createElement('div')
         let bottomRightCross = document.createElement('div')
-        // $(top, topLeft, topRight, centreLeft, centreRight, bottomLeft, bottomRight, bottom, topLeftCross, topCentre, topRightCross, bottomLeftCross, bottomCentre, bottomRightCross).attr('class', 'unlit');
         $(number).append(top, topLeft, topRight, centreLeft, centreRight, bottomLeft, bottomRight, bottom, topLeftCross, topCentre, topRightCross, bottomLeftCross, bottomCentre, bottomRightCross);
         $(clockArea).append(number);
         unlitter(number)
@@ -683,19 +671,4 @@ $(document).ready(function () {
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
