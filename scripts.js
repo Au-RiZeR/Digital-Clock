@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var clockArea = $('#main')
+    var flicker = 1;
     var segments = function () {
         if (localStorage.getItem('segments')) {
             return localStorage.getItem('segments')
@@ -56,9 +57,25 @@ $(document).ready(function () {
         eval(`n${segments() + second}(2)`);
         eval(`n${segments() + third}(3)`);
         eval(`n${segments() + forth}(4)`);
-        // flash();
+        flash();
     }, 1000);
-
+    function flash() {
+        for (let i = 1; i < 3; i++) {
+            const element = $(`#d${i}`);
+            let existingClasses = $(element).attr('class');
+            if (flicker == 1) {
+                $(element).attr('class', existingClasses + ' lit');
+            } else {
+                let newClasses = existingClasses.replace(' lit', '');
+                $(element).attr('class', newClasses);
+            }
+        }
+        if (flicker == 1) {
+            flicker++
+        } else {
+            flicker--
+        }
+    }
     $('#options').click(function (e) {
         e.preventDefault();
         if ($('nav')[0].children.length > 1) {
