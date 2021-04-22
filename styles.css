@@ -2,6 +2,10 @@ body {
 background-color: black;
 }
 
+input {
+    border-color: white;
+}
+
 #main {
     display: flex;
     position: relative;

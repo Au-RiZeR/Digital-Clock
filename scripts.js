@@ -9,6 +9,21 @@ $(document).ready(function () {
             return 7
         }
     }
+    var innerColor
+    if (localStorage.getItem('innerColor')) {
+        innerColor = localStorage.getItem('innerColor')
+    } else {
+        localStorage.setItem('innerColor', '#ff0000')
+        innerColor = localStorage.getItem('innerColor')
+    }
+    var outerColor
+    if (localStorage.getItem('outerColor')) {
+        outerColor = localStorage.getItem('outerColor')
+    } else {
+        localStorage.setItem('outerColor', '#646464')
+        outerColor = localStorage.getItem('outerColor')
+    }
+    console.log(innerColor)
     var size = 1
     console.log(localStorage.getItem('size'))
     if (localStorage.getItem('size')) {
@@ -31,10 +46,13 @@ $(document).ready(function () {
     }
     generate()
     changeSize()
-    setTimeout(() => {
+    setTimeout(function() {
         document.getElementById(`main`).style.transitionDuration = "2s";
     }, 1000);
-    setInterval(() => {
+    setInterval(function() {
+        $('.lit').css('background-image', `radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
+        $('.unlit').css('background-image', `radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
+
         for (let i = 1; i < 5; i++) {
             resetter(i);
         }
@@ -56,17 +74,25 @@ $(document).ready(function () {
         eval(`n${segments() + second}(2)`);
         eval(`n${segments() + third}(3)`);
         eval(`n${segments() + forth}(4)`);
+        console.log(innerColor)
+        $('.lit').css('background-image', `radial-gradient(${innerColor}, ${outerColor})`);
         flash();
+        // $('.lit').css('background-image', `radial-gradient(${$(innerColor).val()}, rgba(255,0,0,0.5))`);
     }, 1000);
+    // setInterval(function(){
+    //     $('.lit').css('background-image', `radial-gradient(${$(innerColor).val()}, rgba(255,0,0,0.5))`);
+    // }, 1000);
     function flash() {
         for (let i = 1; i < 3; i++) {
+
             const element = $(`#d${i}`);
             let existingClasses = $(element).attr('class');
             if (flicker == 1) {
-                $(element).attr('class', existingClasses + ' lit');
-            } else {
-                let newClasses = existingClasses.replace(' lit', '');
+                let newClasses = existingClasses.replace(' unlit', ' lit');
                 $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
         if (flicker == 1) {
@@ -78,12 +104,31 @@ $(document).ready(function () {
     $('#options').click(function (e) {
         e.preventDefault();
         if ($('nav')[0].children.length > 1) {
-            for (let i = 1; i <= $('nav')[0].children.length + 4; i++) {
+            for (let i = 1; i <= $('nav')[0].children.length + 6; i++) {
                 let nav = document.getElementById('nav')
                 nav.removeChild(nav.childNodes[2])
 
             }
         } else {
+            var innerColors = document.createElement('input')
+            $(innerColors).attr('type', 'color');
+            $(innerColors).attr('value', innerColor);
+            var outerColors = document.createElement('input')
+            $(outerColors).attr('type', 'color');
+            $(outerColors).attr('value', localStorage.getItem('outerColor'));
+            $('nav').append(innerColors, outerColors);
+            $(innerColors).change(function (e) {
+                e.preventDefault();
+                localStorage.setItem('innerColor', $(innerColors).val())
+                console.log($(innerColors).val())
+                innerColor = localStorage.getItem('innerColor')
+            });
+            $(outerColors).change(function (e) {
+                e.preventDefault();
+                localStorage.setItem('outerColor', $(outerColors).val())
+                console.log($(outerColors).val())
+                outerColor = localStorage.getItem('outerColor')
+            });
             var shrink = document.createElement('button')
             $(shrink).text('shrink');
             $('nav').append(shrink);
@@ -146,10 +191,13 @@ $(document).ready(function () {
     });
     function resetter(placement) {
         for (let i = 0; i < segments(); i++) {
-            let element = $(`#number${placement} > div`)[i];
-            let existingClasses = $(element).attr('class');
-            let newClasses = existingClasses.replace(' lit', '');
-            $(element).attr('class', newClasses)
+            // let element = $(`#number${placement} > div`)[i];
+            // let existingClasses = $(element).attr('class');
+            // let newClasses = existingClasses.replace(' lit', ' unlit');
+            // $(element).attr('class', newClasses)
+            $('.unlit').css('background-image', `radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
+            // $('.lit').css('background-image', `radial-gradient(${$(innerColor).val()}, rgba(255,0,0,0.5))`);
+            // $('.unlit').css('background-image', `radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
         }
     }
     function changeSize() {
@@ -191,7 +239,7 @@ $(document).ready(function () {
         for (let i = 0; i < number.childNodes.length; i++) {
             let div = $(number.childNodes[i])
             let id = segmentLoad[i]
-            $(div).attr('class', `unlit ${id}`);
+            $(div).attr('class', ` unlit ${id}`);
         }
     }
     function sevenSegments(n) {
@@ -205,7 +253,7 @@ $(document).ready(function () {
         let bottomLeft = document.createElement('div')
         let bottomRight = document.createElement('div')
         let bottom = document.createElement('div')
-        $(top, topLeft, topRight, centre, bottomLeft, bottomRight, bottom).attr('class', 'unlit');
+        // $(top, topLeft, topRight, centre, bottomLeft, bottomRight, bottom).attr('class', 'unlit');
         $(number).append(top, topLeft, topRight, centre, bottomLeft, bottomRight, bottom);
         $(clockArea).append(number);
         unlitter(number)
@@ -223,7 +271,7 @@ $(document).ready(function () {
         let bottom = document.createElement('div')
         let topCross = document.createElement('div')
         let bottomCross = document.createElement('div')
-        $(top, topLeft, topRight, centre, bottomLeft, bottomRight, bottom, topCross, bottomCross).attr('class', 'unlit');
+        // $(top, topLeft, topRight, centre, bottomLeft, bottomRight, bottom, topCross, bottomCross).attr('class', 'unlit');
         $(number).append(top, topLeft, topRight, centre, bottomLeft, bottomRight, bottom, topCross, bottomCross);
         $(clockArea).append(number);
         unlitter(number)
@@ -246,281 +294,392 @@ $(document).ready(function () {
         let bottomLeftCross = document.createElement('div')
         let bottomCentre = document.createElement('div')
         let bottomRightCross = document.createElement('div')
-        $(top, topLeft, topRight, centreLeft, centreRight, bottomLeft, bottomRight, bottom, topLeftCross, topCentre, topRightCross, bottomLeftCross, bottomCentre, bottomRightCross).attr('class', 'unlit');
+        // $(top, topLeft, topRight, centreLeft, centreRight, bottomLeft, bottomRight, bottom, topLeftCross, topCentre, topRightCross, bottomLeftCross, bottomCentre, bottomRightCross).attr('class', 'unlit');
         $(number).append(top, topLeft, topRight, centreLeft, centreRight, bottomLeft, bottomRight, bottom, topLeftCross, topCentre, topRightCross, bottomLeftCross, bottomCentre, bottomRightCross);
         $(clockArea).append(number);
         unlitter(number)
     }
     function n70(placement) {
         for (let i = 0; i < 7; i++) {
-            if (i == 3) {
-                i++
-            }
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 3) {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            } else {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            }
         }
     }
     function n71(placement) {
-        for (let i = 2; i < 7; i += 3) {
+        for (let i = 0; i < 7; i++) {
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 2 || i == 5) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            }
         }
     }
     function n72(placement) {
         for (let i = 0; i < 7; i++) {
-            if (i == 1 || i == 5) {
-                i++
-            }
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 1 || i == 5) {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            } else {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            }
         }
     }
     function n73(placement) {
         for (let i = 0; i < 7; i++) {
-            if (i == 1 || i == 4) {
-                i++
-            }
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 1 || i == 4) {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            } else {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            }
         }
     }
     function n74(placement) {
-        for (let i = 1; i < 7; i++) {
-            if (i == 4 || i == 6) {
-                i++
-            }
+        for (let i = 0; i < 7; i++) {
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 6 || i == 4 || i == 0) {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            } else {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            }
         }
     }
     function n75(placement) {
         for (let i = 0; i < 7; i++) {
-            if (i == 2 || i == 4) {
-                i++
-            }
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 2 || i == 4) {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            } else {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            }
         }
     }
     function n76(placement) {
         for (let i = 0; i < 7; i++) {
-            if (i == 2) {
-                i++
-            }
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 2) {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            } else {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            }
         }
     }
     function n77(placement) {
-        for (let i = 0; i < 7; i += 2) {
-            if (i == 4) {
-                i++
-            }
+        for (let i = 0; i < 7; i++) {
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 1 || i == 3 || i == 4 || i == 6) {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            } else {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            }
         }
     }
     function n78(placement) {
         for (let i = 0; i < 7; i++) {
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
-        }
-    }
+            let newClasses = existingClasses.replace(' unlit', ' lit');
+            $(element).attr('class', newClasses);
+    }}
     function n79(placement) {
         for (let i = 0; i < 7; i++) {
-            if (i == 4) {
-                i++
-            }
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 4) {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            } else {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            }
         }
     }
     function n90(placement) {
         for (let i = 0; i < 7; i++) {
-            if (i == 3) {
-                i++
-            }
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 3) {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            } else {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            }
         }
     }
     function n91(placement) {
-        for (let i = 2; i < 9; i++) {
+        for (let i = 0; i < 8; i++) {
+            let element = $(`#number${placement} > div`)[i];
+            let existingClasses = $(element).attr('class');
             if (i == 2 || i == 5 || i == 7) {
-                let element = $(`#number${placement} > div`)[i];
-                let existingClasses = $(element).attr('class');
-                $(element).attr('class', existingClasses + ' lit');
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
     }
     function n92(placement) {
         for (let i = 0; i < 9; i++) {
+            let element = $(`#number${placement} > div`)[i];
+            let existingClasses = $(element).attr('class');
             if (i == 0 || i == 2 || i == 6 || i == 8) {
-                let element = $(`#number${placement} > div`)[i];
-                let existingClasses = $(element).attr('class');
-                $(element).attr('class', existingClasses + ' lit');
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
     }
     function n93(placement) {
         for (let i = 0; i < 9; i++) {
-            if (i == 0 || i == 7 || i == 3 || i == 8) {
-                let element = $(`#number${placement} > div`)[i];
-                let existingClasses = $(element).attr('class');
-                $(element).attr('class', existingClasses + ' lit');
+            let element = $(`#number${placement} > div`)[i];
+            let existingClasses = $(element).attr('class');
+            if (i == 0 || i == 3 || i == 8 || i == 7) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
     }
     function n94(placement) {
-        for (let i = 1; i < 6; i++) {
-            if (i == 4) {
-                i++
-            }
+        for (let i = 0; i < 9; i++) {
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 1 || i == 3 || i == 2 || i == 5) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            }
         }
     }
     function n95(placement) {
-        for (let i = 0; i < 7; i++) {
-            if (i == 2 || i == 4) {
-                i++
-            }
+        for (let i = 0; i < 9; i++) {
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 0 || i == 1 || i == 3 || i == 5 || i ==6) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            }
         }
     }
     function n96(placement) {
-        for (let i = 3; i < 8; i++) {
+        for (let i = 0; i < 9; i++) {
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 4 || i == 7 || i == 3 || i == 5 || i ==6) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            }
         }
     }
     function n97(placement) {
-        for (let i = 0; i < 9; i += 1) {
-            if (i == 0 || i == 4 || i == 7) {
-                let element = $(`#number${placement} > div`)[i];
-                let existingClasses = $(element).attr('class');
-                $(element).attr('class', existingClasses + ' lit');
+        for (let i = 0; i < 9; i++) {
+            let element = $(`#number${placement} > div`)[i];
+            let existingClasses = $(element).attr('class');
+            if (i == 4 || i == 7 || i == 0 ) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
     }
     function n98(placement) {
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 9; i++) {
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i ==5 || i == 6 ) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            }
         }
     }
     function n99(placement) {
         for (let i = 0; i < 9; i++) {
-            if (i == 0 || i == 1 || i == 2 || i == 3 || i == 8) {
-                let element = $(`#number${placement} > div`)[i];
-                let existingClasses = $(element).attr('class');
-                $(element).attr('class', existingClasses + ' lit');
+            let element = $(`#number${placement} > div`)[i];
+            let existingClasses = $(element).attr('class');
+            if (i == 0 || i == 1 || i == 2 || i == 3 || i == 8 ) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
     }
     function n140(placement) {
-        for (let i = 0; i < 12; i++) {
-            if (i == 0 || i == 1 || i == 2 || i == 5 || i == 6 || i == 7 || i == 10 || i == 11) {
-                let element = $(`#number${placement} > div`)[i];
-                let existingClasses = $(element).attr('class');
-                $(element).attr('class', existingClasses + ' lit');
+        for (let i = 0; i < 14; i++) {
+            let element = $(`#number${placement} > div`)[i];
+            let existingClasses = $(element).attr('class');
+            if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6 || i== 7 || i == 10 || i == 11 ) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
     }
     function n141(placement) {
-        for (let i = 2; i < 11; i++) {
-            if (i == 2 || i == 6 || i == 10) {
-                let element = $(`#number${placement} > div`)[i];
-                let existingClasses = $(element).attr('class');
-                $(element).attr('class', existingClasses + ' lit');
+        for (let i = 0; i < 14; i++) {
+            let element = $(`#number${placement} > div`)[i];
+            let existingClasses = $(element).attr('class');
+            if (i == 2 || i == 6 || i == 10 ) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
     }
     function n142(placement) {
-        for (let i = 0; i < 8; i++) {
-            if (i == 0 || i == 2 || i == 3 || i == 4 || i == 5 || i == 7) {
-                let element = $(`#number${placement} > div`)[i];
-                let existingClasses = $(element).attr('class');
-                $(element).attr('class', existingClasses + ' lit');
+        for (let i = 0; i < 14; i++) {
+            let element = $(`#number${placement} > div`)[i];
+            let existingClasses = $(element).attr('class');
+            if (i == 0 || i == 2 || i == 3 || i == 4 || i == 5 || i == 7 ) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
     }
     function n143(placement) {
-        for (let i = 0; i < 8; i++) {
-            if (i == 0 || i == 2 || i == 4 || i == 6 || i == 7) {
-                let element = $(`#number${placement} > div`)[i];
-                let existingClasses = $(element).attr('class');
-                $(element).attr('class', existingClasses + ' lit');
+        for (let i = 0; i < 14; i++) {
+            let element = $(`#number${placement} > div`)[i];
+            let existingClasses = $(element).attr('class');
+            if (i == 0 || i == 2 || i == 4 || i == 6 || i == 7 ) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
     }
     function n144(placement) {
-        for (let i = 1; i < 7; i++) {
-            if (i == 1 || i == 2 || i == 3 || i == 4 || i == 6) {
-                let element = $(`#number${placement} > div`)[i];
-                let existingClasses = $(element).attr('class');
-                $(element).attr('class', existingClasses + ' lit');
+        for (let i = 0; i < 14; i++) {
+            let element = $(`#number${placement} > div`)[i];
+            let existingClasses = $(element).attr('class');
+            if (i == 1 || i == 2 || i == 3 || i == 4 || i == 6 ) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
     }
     function n145(placement) {
-        for (let i = 0; i < 8; i++) {
-            if (i == 2 || i == 5) {
-                i++
-            }
+        for (let i = 0; i < 14; i++) {
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 0 || i == 1 || i == 3 || i == 4 || i == 6 || i == 7) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            }
         }
     }
     function n146(placement) {
-        for (let i = 0; i < 8; i++) {
-            if (i == 2) {
-                i++
-            }
+        for (let i = 0; i < 14; i++) {
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 0 || i == 1 || i == 3 || i == 4 || i == 5 || i == 6 || i == 7) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            }
         }
     }
     function n147(placement) {
-        for (let i = 0; i < 13; i += 2) {
-            if (i == 0 || i == 10 || i == 12) {
-                let element = $(`#number${placement} > div`)[i];
-                let existingClasses = $(element).attr('class');
-                $(element).attr('class', existingClasses + ' lit');
+        for (let i = 0; i < 14; i++) {
+            let element = $(`#number${placement} > div`)[i];
+            let existingClasses = $(element).attr('class');
+            if (i == 0 || i == 10 || i == 11 ) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
     }
     function n148(placement) {
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 14; i++) {
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
-            $(element).attr('class', existingClasses + ' lit');
+            if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6 || i == 7 ) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
+            }
         }
     }
     function n149(placement) {
-        for (let i = 0; i < 9; i++) {
-            if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 6) {
-                let element = $(`#number${placement} > div`)[i];
-                let existingClasses = $(element).attr('class');
-                $(element).attr('class', existingClasses + ' lit');
+        for (let i = 0; i < 14; i++) {
+            let element = $(`#number${placement} > div`)[i];
+            let existingClasses = $(element).attr('class');
+            if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 6 ) {
+                let newClasses = existingClasses.replace(' unlit', ' lit');
+                $(element).attr('class', newClasses);
+            } else {
+                let newClasses = existingClasses.replace(' lit', ' unlit');
+                $(element).attr('class', newClasses)
             }
         }
     }
