@@ -12,10 +12,10 @@ $(document).ready(function () {
     var size = 1
     console.log(localStorage.getItem('size'))
     if (localStorage.getItem('size')) {
-    size = localStorage.getItem('size')
+        size = localStorage.getItem('size')
     } else {
-    localStorage.setItem('size', 1)
-    size = localStorage.getItem('size')
+        localStorage.setItem('size', 1)
+        size = localStorage.getItem('size')
     }
     console.log(size)
     var segmentAmounts = ['7', '9', '14']
@@ -32,9 +32,8 @@ $(document).ready(function () {
     generate()
     changeSize()
     setTimeout(() => {
-        document.getElementById(`main`).style.transitionDuration = "2s";  
+        document.getElementById(`main`).style.transitionDuration = "2s";
     }, 1000);
-
     setInterval(() => {
         for (let i = 1; i < 5; i++) {
             resetter(i);
@@ -137,10 +136,10 @@ $(document).ready(function () {
                 e.preventDefault();
                 if (time == 24) {
                     time = 12
-                    localStorage.setItem('time',time)
+                    localStorage.setItem('time', time)
                 } else {
                     time = 24
-                    localStorage.setItem('time',time)
+                    localStorage.setItem('time', time)
                 }
             });
         }
@@ -153,12 +152,9 @@ $(document).ready(function () {
             $(element).attr('class', newClasses)
         }
     }
-
     function changeSize() {
         $(clockArea).toggleClass(`animate${size}`);
     }
-
-
     function generate() {
         while (main.firstChild) {
             main.removeChild(main.firstChild);
@@ -191,7 +187,6 @@ $(document).ready(function () {
             }
         }
     }
-
     function unlitter(number) {
         for (let i = 0; i < number.childNodes.length; i++) {
             let div = $(number.childNodes[i])
@@ -199,7 +194,6 @@ $(document).ready(function () {
             $(div).attr('class', `unlit ${id}`);
         }
     }
-
     function sevenSegments(n) {
         let number = document.createElement('div')
         $(number).attr('id', 'number' + n);
@@ -216,7 +210,6 @@ $(document).ready(function () {
         $(clockArea).append(number);
         unlitter(number)
     }
-
     function nineSegments(n) {
         let number = document.createElement('div')
         $(number).attr('id', 'number' + n);
@@ -235,7 +228,6 @@ $(document).ready(function () {
         $(clockArea).append(number);
         unlitter(number)
     }
-
     function fourteenSegments(n) {
         let number = document.createElement('div')
         $(number).attr('id', 'number' + n);
@@ -254,15 +246,11 @@ $(document).ready(function () {
         let bottomLeftCross = document.createElement('div')
         let bottomCentre = document.createElement('div')
         let bottomRightCross = document.createElement('div')
-
         $(top, topLeft, topRight, centreLeft, centreRight, bottomLeft, bottomRight, bottom, topLeftCross, topCentre, topRightCross, bottomLeftCross, bottomCentre, bottomRightCross).attr('class', 'unlit');
         $(number).append(top, topLeft, topRight, centreLeft, centreRight, bottomLeft, bottomRight, bottom, topLeftCross, topCentre, topRightCross, bottomLeftCross, bottomCentre, bottomRightCross);
         $(clockArea).append(number);
         unlitter(number)
     }
-
-
-
     function n70(placement) {
         for (let i = 0; i < 7; i++) {
             if (i == 3) {
@@ -386,8 +374,8 @@ $(document).ready(function () {
         }
     }
     function n93(placement) {
-        for (let i = 0; i < 7; i++) {
-            if (i == 0 || i == 3 || i == 6 || i == 7) {
+        for (let i = 0; i < 9; i++) {
+            if (i == 0 || i == 7 || i == 3 || i == 8) {
                 let element = $(`#number${placement} > div`)[i];
                 let existingClasses = $(element).attr('class');
                 $(element).attr('class', existingClasses + ' lit');
@@ -416,16 +404,13 @@ $(document).ready(function () {
     }
     function n96(placement) {
         for (let i = 3; i < 8; i++) {
-            // if (i ==) {
-            //     i++
-            // }
             let element = $(`#number${placement} > div`)[i];
             let existingClasses = $(element).attr('class');
             $(element).attr('class', existingClasses + ' lit');
         }
     }
     function n97(placement) {
-        for (let i = 0; i < 8; i += 2) {
+        for (let i = 0; i < 9; i += 1) {
             if (i == 0 || i == 4 || i == 7) {
                 let element = $(`#number${placement} > div`)[i];
                 let existingClasses = $(element).attr('class');
