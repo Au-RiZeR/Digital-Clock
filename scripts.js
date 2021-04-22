@@ -21,7 +21,13 @@ $(document).ready(function () {
     var seven = ['top', 'topLeft', 'topRight', 'centre', 'bottomLeft', 'bottomRight', 'bottom']
     var nine = ['top', 'topLeft', 'topRight', 'centre', 'bottomLeft', 'bottomRight', 'bottom', 'topCross', 'bottomCross']
     var fourteen = ['top', 'topLeft', 'topRight', 'centreLeft', 'centreRight', 'bottomLeftBig', 'bottomRightBig', 'bottomBig', 'topLeftCross', 'topCentre', 'topRightCross', 'bottomLeftCross', 'bottomCentre', 'bottomRightCross']
-    var time = 24
+    var time
+    if (localStorage.getItem('time')) {
+        time = localStorage.getItem('time')
+    } else {
+        localStorage.setItem('time', 24)
+        time = localStorage.getItem('time')
+    }
     generate()
     changeSize()
     setTimeout(() => {
@@ -56,7 +62,7 @@ $(document).ready(function () {
     $('#options').click(function (e) {
         e.preventDefault();
         if ($('nav')[0].children.length > 1) {
-            for (let i = 1; i <= $('nav')[0].children.length + 3; i++) {
+            for (let i = 1; i <= $('nav')[0].children.length + 4; i++) {
                 let nav = document.getElementById('nav')
                 nav.removeChild(nav.childNodes[2])
 
@@ -105,6 +111,19 @@ $(document).ready(function () {
                 if (segmentAmounts.indexOf(segments()) > 0) {
                     localStorage.setItem('segments', segmentAmounts[segmentAmounts.indexOf(segments()) - 1])
                     generate()
+                }
+            });
+            var timeChoice = document.createElement('button')
+            $(timeChoice).text('time');
+            $('nav').append(timeChoice);
+            $(timeChoice).click(function (e) {
+                e.preventDefault();
+                if (time == 24) {
+                    time = 12
+                    localStorage.setItem('time',time)
+                } else {
+                    time = 24
+                    localStorage.setItem('time',time)
                 }
             });
         }
