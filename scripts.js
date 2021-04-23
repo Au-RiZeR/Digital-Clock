@@ -121,7 +121,7 @@ $(document).ready(function () {
     $('#options').click(function (e) {
         e.preventDefault();
         if ($('nav')[0].children.length > 1) {
-            for (let i = 1; i <= $('nav')[0].children.length + 6; i++) {
+            for (let i = 1; i <= $('nav')[0].children.length + 7; i++) {
                 let nav = document.getElementById('nav')
                 nav.removeChild(nav.childNodes[2])
             }
