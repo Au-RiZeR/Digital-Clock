@@ -1,12 +1,31 @@
 $(document).ready(function () {
     var clockArea = $('#main')
     var flicker = 1;
+    var gradient
+    var gradientq
+    if (localStorage.getItem('gradient')) {
+        gradient = Number(localStorage.getItem('gradient'))
+        console.log(gradient)
+    } else {
+        gradient = 1
+        localStorage.setItem('gradient', gradient)
+    }
+    gradientCheck()
     var segments = function () {
         if (localStorage.getItem('segments')) {
             return localStorage.getItem('segments')
         } else {
             localStorage.setItem('segments', 7)
             return 7
+        }
+    }
+    function gradientCheck() {
+        console.log(gradient === 1)
+        console.log(gradient === -1)
+        if (gradient === 1) {
+            gradientq = 'radial'
+        } if (gradient === -1){
+            gradientq = 'linear'
         }
     }
     var innerColor
@@ -50,8 +69,8 @@ $(document).ready(function () {
         document.getElementById(`main`).style.transitionDuration = "2s";
     }, 1000);
     setInterval(function() {
-        $('.lit').css('background-image', `radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
-        $('.unlit').css('background-image', `radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
+        // $('.lit').css('background-image', `${gradientq}-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
+        // $('.unlit').css('background-image', `${gradientq}-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
 
         for (let i = 1; i < 5; i++) {
             resetter(i);
@@ -75,7 +94,7 @@ $(document).ready(function () {
         eval(`n${segments() + third}(3)`);
         eval(`n${segments() + forth}(4)`);
         console.log(innerColor)
-        $('.lit').css('background-image', `radial-gradient(${innerColor}, ${outerColor})`);
+        $('.lit').css('background-image', `${gradientq}-gradient(${innerColor}, ${outerColor})`);
         flash();
     }, 1000);
     function flash() {
@@ -92,11 +111,11 @@ $(document).ready(function () {
         }
         if (flicker == 1) {
             flicker++
-            $('.lit').css('background-image', `radial-gradient(${innerColor}, ${outerColor})`);
+            $('.lit').css('background-image', `${gradientq}-gradient(${innerColor}, ${outerColor})`);
 
         } else {
             flicker--
-            $('.unlit').css('background-image', `radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
+            $('.unlit').css('background-image', `${gradientq}-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
         }
     }
     $('#options').click(function (e) {
@@ -107,13 +126,22 @@ $(document).ready(function () {
                 nav.removeChild(nav.childNodes[2])
             }
         } else {
+            var gradients = document.createElement('button')
+            $(gradients).text('gradient');
+            $(gradients).click(function (e) { 
+                e.preventDefault();
+                gradient = gradient*-1
+                console.log(gradient)
+                localStorage.setItem('gradient', gradient)
+                gradientCheck()
+            });
             var innerColors = document.createElement('input')
             $(innerColors).attr('type', 'color');
             $(innerColors).attr('value', innerColor);
             var outerColors = document.createElement('input')
             $(outerColors).attr('type', 'color');
             $(outerColors).attr('value', localStorage.getItem('outerColor'));
-            $('nav').append(innerColors, outerColors);
+            $('nav').append(innerColors, outerColors, gradients);
             $(innerColors).change(function (e) {
                 e.preventDefault();
                 localStorage.setItem('innerColor', $(innerColors).val())
@@ -188,7 +216,7 @@ $(document).ready(function () {
     });
     function resetter(placement) {
         for (let i = 0; i < segments(); i++) {
-            $('.unlit').css('background-image', `radial-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
+            $('.unlit').css('background-image', `${gradientq}-gradient( rgba(100,100,100,0.5),rgba(100,100,100,0.05))`);
         }
     }
     function changeSize() {
